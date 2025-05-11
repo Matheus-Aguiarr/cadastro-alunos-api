@@ -23,7 +23,7 @@ Cada aluno possui:
 - Spring Data JPA
 - Hibernate
 - Lombok
-- Banco de dados H2 (ou qualquer outro via configuração)
+- Banco de dados PostgreSQL
 
 ## 📂 Estrutura do projeto
 
