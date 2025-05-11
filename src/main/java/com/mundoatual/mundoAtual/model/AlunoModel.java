@@ -25,6 +25,12 @@ public class AlunoModel {
     @JsonProperty("level")
     private String level;
 
+    //Many se referencia a classe, e One se referencia ao atributo
+    @ManyToOne
+    @JsonProperty("turma")
+    @JoinColumn(name = "turma")
+    private TurmaModel turma;
+
     public AlunoModel() {}
 
     public AlunoModel(String name, int age) {

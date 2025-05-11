@@ -22,13 +22,13 @@ public class AlunoService {
     // Funcao que define o nivel do aluno com base na idade dele
     public String defineLevel(int age) {
         if(age <= 6) {
-            return "Jardim de Infancia";
+            return "Jardim de Infância";
         } else if(age <= 11) {
             return "Ensino fundamental 1";
         } else if (age <= 15) {
             return "Ensino fundamental 2";
         } else if (age <= 18) {
-            return "Ensino Medio";
+            return "Ensino Médio";
         } else {
             return "Aluno maior de 18 anos";
         }
