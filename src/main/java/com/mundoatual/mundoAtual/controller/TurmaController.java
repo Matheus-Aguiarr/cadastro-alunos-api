@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class TurmaController {
 
-//    ToDo: PutMapping(updateTurmas), deleteMapping(deleteTurmas), PostMapping(addNewAluno, to add an aluno to a turma.)
+//    ToDo: deleteMapping(deleteTurmas), Refactor endpoints to use more DTOs, create DTOs for the entity Turma.
 
     private final TurmaService turmaService;
 

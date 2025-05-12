@@ -13,6 +13,8 @@ import java.util.List;
 
 @RestController
 public class AlunoController {
+
+//    ToDo: Refactor endpoints to use more DTOs.
     private final AlunoService alunoService;
 
     public AlunoController(AlunoService alunoService) {
@@ -22,8 +24,8 @@ public class AlunoController {
     @GetMapping("/aluno")
     public ResponseEntity<List<AlunoDTO>> getAluno() {
         List<AlunoModel> alunos = alunoService.getAlunos();
-        List<AlunoDTO> alunoDTOs = alunos.stream().map(AlunoDTO::new).toList();
-
+        List<AlunoDTO> alunoDTOs = alunos.stream().map(AlunoDTO::new).toList(); // Transforma a lista de AlunoModel em uma lista de AlunoDTO:
+    //.map(AlunoDTO::new) -> Para cada aluno da lista, chama o construtor de alunoDTO passando esse aluno como parametro.
         return ResponseEntity.ok(alunoDTOs);
     }
 

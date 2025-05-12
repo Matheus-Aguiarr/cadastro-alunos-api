@@ -46,12 +46,8 @@ public class AlunoService {
 
     public AlunoDTO getAlunoById(Long id) {
         AlunoModel aluno = repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno nao encontrado"));
-        AlunoDTO dto = new AlunoDTO();
-        dto.setName(aluno.getName());
-        dto.setAge(aluno.getAge());
-        dto.setLevel(aluno.getLevel());
-        dto.setTurmaName(aluno.getTurma() != null ? aluno.getTurma().getName() : null);
-        return dto;
+        AlunoDTO dto;
+        return dto = new AlunoDTO(aluno);
     }
 
 
