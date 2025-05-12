@@ -1,5 +1,7 @@
 package com.mundoatual.mundoAtual.controller;
 
+import com.mundoatual.mundoAtual.dtos.AlunoDTO;
+import com.mundoatual.mundoAtual.dtos.AlunoRequestDTO;
 import com.mundoatual.mundoAtual.model.AlunoModel;
 import com.mundoatual.mundoAtual.service.AlunoService;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,15 +20,23 @@ public class AlunoController {
     }
 
     @GetMapping("/aluno")
-    public ResponseEntity<List<AlunoModel>> getAluno() {
+    public ResponseEntity<List<AlunoDTO>> getAluno() {
         List<AlunoModel> alunos = alunoService.getAlunos();
-        return ResponseEntity.ok(alunos);
+        List<AlunoDTO> alunoDTOs = alunos.stream().map(AlunoDTO::new).toList();
+
+        return ResponseEntity.ok(alunoDTOs);
+    }
+
+    @GetMapping("/aluno/{id}")
+    public ResponseEntity<AlunoDTO> getAlunoById(@PathVariable Long id) {
+        AlunoDTO searchAluno = alunoService.getAlunoById(id);
+        return ResponseEntity.ok(searchAluno);
     }
 
     @PostMapping("/aluno")
-    public ResponseEntity<String> criarAluno(@RequestBody AlunoModel aluno) {
-        System.out.println("Recebido: " + aluno);
-        AlunoModel alunoSalvo = alunoService.criarAluno(aluno);
+    public ResponseEntity<String> criarAluno(@RequestBody AlunoRequestDTO dto) {
+        System.out.println("Recebido: " + dto);
+        AlunoModel alunoSalvo = alunoService.criarAluno(dto);
         return ResponseEntity.ok("Aluno Criado com sucesso: " + alunoSalvo);
     }
 
@@ -41,7 +51,7 @@ public class AlunoController {
     }
 
     @PutMapping("/aluno/{id}")
-    public ResponseEntity<String> atualizarAluno(@PathVariable Long id, @RequestBody AlunoModel dadosNovos) {
+    public ResponseEntity<String> atualizarAluno(@PathVariable Long id, @RequestBody AlunoDTO dadosNovos) {
         AlunoModel alunoAtualizado = alunoService.atualizarAluno(id, dadosNovos); //Aluno atualizado
         return ResponseEntity.ok("Aluno Atualizado com sucesso: " + alunoAtualizado);//Quero imprimir ele aqui
     }

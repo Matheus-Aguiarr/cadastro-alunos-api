@@ -1,5 +1,6 @@
 package com.mundoatual.mundoAtual.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class AlunoModel {
     @ManyToOne
     @JsonProperty("turma")
     @JoinColumn(name = "turma")
+    @JsonBackReference // evita serializacao infinita
     private TurmaModel turma;
 
     public AlunoModel() {}
@@ -60,6 +62,18 @@ public class AlunoModel {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public TurmaModel getTurma() {
+        return turma;
+    }
+
+    public void setTurma(TurmaModel turma) {
+        this.turma = turma;
+    }
+
+    public long getId() {
+        return id;
     }
 
     @Override

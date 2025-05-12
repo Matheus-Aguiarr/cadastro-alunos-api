@@ -1,5 +1,6 @@
 package com.mundoatual.mundoAtual.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
@@ -20,6 +21,7 @@ public class TurmaModel {
     //One se referencia a classe, e Many se referencia ao atributo
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
     @JsonProperty("alunos")
+    @JsonManagedReference // Evita serializacao infinita
     private List<AlunoModel> alunos = new ArrayList<>();
 
     public TurmaModel() {}

@@ -1,11 +1,14 @@
 package com.mundoatual.mundoAtual.service;
 
+import com.mundoatual.mundoAtual.dtos.AlunoDTO;
+import com.mundoatual.mundoAtual.dtos.AlunoRequestDTO;
 import com.mundoatual.mundoAtual.model.AlunoModel;
+import com.mundoatual.mundoAtual.model.TurmaModel;
 import com.mundoatual.mundoAtual.repository.AlunoRepository;
+import com.mundoatual.mundoAtual.repository.TurmaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,10 +16,12 @@ import java.util.Optional;
 public class AlunoService {
 
     private final AlunoRepository repository;
+    private final TurmaRepository turmaRepository;
 
     @Autowired
-    public AlunoService(AlunoRepository repository) {
+    public AlunoService(AlunoRepository repository, TurmaRepository turmaRepository) {
         this.repository = repository;
+        this.turmaRepository = turmaRepository;
     }
 
     // Funcao que define o nivel do aluno com base na idade dele
@@ -39,10 +44,27 @@ public class AlunoService {
         return repository.findAll();
     }
 
+    public AlunoDTO getAlunoById(Long id) {
+        AlunoModel aluno = repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno nao encontrado"));
+        AlunoDTO dto = new AlunoDTO();
+        dto.setName(aluno.getName());
+        dto.setAge(aluno.getAge());
+        dto.setLevel(aluno.getLevel());
+        dto.setTurmaName(aluno.getTurma() != null ? aluno.getTurma().getName() : null);
+        return dto;
+    }
+
 
     //Metodo para criar um aluno e salvar no db.
-    public AlunoModel criarAluno(AlunoModel aluno) {
-        aluno.setLevel(defineLevel(aluno.getAge()));
+    public AlunoModel criarAluno(AlunoRequestDTO dto) {
+        AlunoModel aluno = new AlunoModel();
+        aluno.setName(dto.getName());
+        aluno.setAge(dto.getAge());
+        aluno.setLevel(defineLevel(dto.getAge()));
+
+        TurmaModel turma = turmaRepository.findById(dto.getTurmaId()).orElseThrow(() -> new RuntimeException("Turma nao encontrada"));
+        aluno.setTurma(turma);
+
         return repository.save(aluno);
     }
 
@@ -52,15 +74,16 @@ public class AlunoService {
     }
 
     //Metodo para atualizar os dados cadastrais de um aluno.
-    public AlunoModel atualizarAluno(Long id, AlunoModel dadosNovos) {
+    public AlunoModel atualizarAluno(Long id, AlunoDTO dto) {
         Optional<AlunoModel> searchAluno = repository.findById(id);
+        TurmaModel turma = turmaRepository.findByName(dto.getTurmaName()).orElseThrow(() -> new RuntimeException("Turma nao encontrada"));
         if(searchAluno.isPresent()) {
             AlunoModel alunoBuscado = searchAluno.get();
-
-            alunoBuscado.setName(dadosNovos.getName());
-            alunoBuscado.setAge(dadosNovos.getAge());
+            alunoBuscado.setName(dto.getName());
+            alunoBuscado.setAge(dto.getAge());
             // Redefine o nivel do aluno
-            alunoBuscado.setLevel(defineLevel(dadosNovos.getAge()));
+            alunoBuscado.setLevel(defineLevel(dto.getAge()));
+            alunoBuscado.setTurma(turma);
             repository.save(alunoBuscado);
             return  alunoBuscado;
         } else {
