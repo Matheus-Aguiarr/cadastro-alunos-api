@@ -38,9 +38,10 @@ public class TurmaController {
     }
 
     @PutMapping("/turma/{id}")
-    public ResponseEntity<TurmaModel> updateTurmas(@PathVariable Long id, @RequestBody TurmaModel newTurma) {
+    public ResponseEntity<TurmaDTO> updateTurmas(@PathVariable Long id, @RequestBody TurmaRequestDTO newTurma) {
         TurmaModel updatedTurma = turmaService.updateTurmas(id, newTurma);
-        return ResponseEntity.ok(updatedTurma);
+        TurmaDTO dto = new TurmaDTO(updatedTurma);
+        return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/turma/{id}/aluno/{idAl}")

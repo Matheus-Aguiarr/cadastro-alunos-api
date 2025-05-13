@@ -38,12 +38,12 @@ public class TurmaService {
         return turmaRepository.save(turmaSave);
     }
 
-    public TurmaModel updateTurmas(Long id, TurmaModel newData) {
+    public TurmaModel updateTurmas(Long id, TurmaRequestDTO dto) {
         Optional<TurmaModel> searchTurma = turmaRepository.findById(id);
 
         if (searchTurma.isPresent()) {
             TurmaModel searchedTurma = searchTurma.get(); //Pega os dados da turma buscada
-            searchedTurma.setName(newData.getName()); //Passa o name dos novos dados para a turma buscada
+            searchedTurma.setName(dto.getName()); //Passa o name dos novos dados para a turma buscada
             turmaRepository.save(searchedTurma);
             return searchedTurma;
         } else {
