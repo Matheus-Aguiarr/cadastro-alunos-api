@@ -45,8 +45,9 @@ public class TurmaController {
     }
 
     @PutMapping("/turma/{id}/aluno/{idAl}")
-    public ResponseEntity<TurmaModel> addAlunoToTurma(@PathVariable Long id, @PathVariable Long idAl) {
+    public ResponseEntity<TurmaDTO> addAlunoToTurma(@PathVariable Long id, @PathVariable Long idAl) {
         TurmaModel turmaWithAluno = turmaService.addAlunoToTurma(id, idAl);
-        return ResponseEntity.ok(turmaWithAluno);
+        TurmaDTO dto = new TurmaDTO(turmaWithAluno);
+        return ResponseEntity.ok(dto);
     }
 }

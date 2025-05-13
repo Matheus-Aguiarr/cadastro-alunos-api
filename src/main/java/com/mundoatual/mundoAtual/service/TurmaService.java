@@ -58,8 +58,10 @@ public class TurmaService {
         if(searchTurma.isPresent() && searchAluno.isPresent()) {
             TurmaModel searchedTurma = searchTurma.get();
             AlunoModel searchedAluno = searchAluno.get();
-
-            searchedTurma.getAlunos().add(searchedAluno); //ADD o aluno buscado a lista de alunos da Turma.
+            if(!searchedTurma.getAlunos().contains(searchedAluno)) { //se a lista ja nao conter o aluno buscado
+                searchedTurma.getAlunos().add(searchedAluno);
+            }
+             //ADD o aluno buscado a lista de alunos da Turma.
             searchedAluno.setTurma(searchedTurma); //Automaticamente seto que a turma do aluno buscado, eh a turma buscada
 
             alunoRepository.save(searchedAluno);
