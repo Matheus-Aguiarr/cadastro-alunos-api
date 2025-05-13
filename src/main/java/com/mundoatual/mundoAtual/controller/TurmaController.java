@@ -50,4 +50,10 @@ public class TurmaController {
         TurmaDTO dto = new TurmaDTO(turmaWithAluno);
         return ResponseEntity.ok(dto);
     }
+
+    @DeleteMapping("/turma/{id}")
+    public ResponseEntity<String> deleteTurmas(@PathVariable Long id) {
+        turmaService.deleteTurmas(id);
+        return ResponseEntity.ok("Turma com o id: " + id +" deletada com sucesso");
+    }
 }

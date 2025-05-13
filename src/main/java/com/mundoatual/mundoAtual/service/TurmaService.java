@@ -1,6 +1,5 @@
 package com.mundoatual.mundoAtual.service;
 
-import com.mundoatual.mundoAtual.dtos.AlunoDTO;
 import com.mundoatual.mundoAtual.dtos.TurmaDTO;
 import com.mundoatual.mundoAtual.dtos.TurmaRequestDTO;
 import com.mundoatual.mundoAtual.model.AlunoModel;
@@ -10,7 +9,6 @@ import com.mundoatual.mundoAtual.repository.TurmaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +47,10 @@ public class TurmaService {
         } else {
             throw new RuntimeException("Turma nao encontrada para o id: " + id);
         }
+    }
+
+    public void deleteTurmas(Long id) {
+        turmaRepository.deleteById(id);
     }
 
     public TurmaModel addAlunoToTurma(Long id, Long idAl) {
