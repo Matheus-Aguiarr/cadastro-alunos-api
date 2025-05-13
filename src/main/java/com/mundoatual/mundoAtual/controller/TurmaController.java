@@ -1,6 +1,8 @@
 package com.mundoatual.mundoAtual.controller;
 
 
+import com.mundoatual.mundoAtual.dtos.TurmaDTO;
+import com.mundoatual.mundoAtual.dtos.TurmaRequestDTO;
 import com.mundoatual.mundoAtual.model.TurmaModel;
 import com.mundoatual.mundoAtual.service.TurmaService;
 import jakarta.persistence.Entity;
@@ -23,15 +25,16 @@ public class TurmaController {
     }
 
     @GetMapping("/turma")
-    public ResponseEntity<List<TurmaModel>> getTurmas() {
-        List<TurmaModel> allTurmas = turmaService.getTurmas();
+    public ResponseEntity<List<TurmaDTO>> getTurmas() {
+        List<TurmaDTO> allTurmas = turmaService.getTurmas();
         return ResponseEntity.ok(allTurmas);
     }
 
     @PostMapping("/turma")
-    public ResponseEntity<TurmaModel> postTurmas(@RequestBody TurmaModel turma) {
+    public ResponseEntity<TurmaDTO> postTurmas(@RequestBody TurmaRequestDTO turma) {
         TurmaModel turmaReceived = turmaService.postTurmas(turma);
-       return ResponseEntity.ok(turmaReceived);
+        TurmaDTO turmaDTO = new TurmaDTO(turmaReceived);
+       return ResponseEntity.ok(turmaDTO);
     }
 
     @PutMapping("/turma/{id}")

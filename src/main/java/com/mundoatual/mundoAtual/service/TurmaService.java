@@ -1,5 +1,8 @@
 package com.mundoatual.mundoAtual.service;
 
+import com.mundoatual.mundoAtual.dtos.AlunoDTO;
+import com.mundoatual.mundoAtual.dtos.TurmaDTO;
+import com.mundoatual.mundoAtual.dtos.TurmaRequestDTO;
 import com.mundoatual.mundoAtual.model.AlunoModel;
 import com.mundoatual.mundoAtual.model.TurmaModel;
 import com.mundoatual.mundoAtual.repository.AlunoRepository;
@@ -7,6 +10,7 @@ import com.mundoatual.mundoAtual.repository.TurmaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +26,16 @@ public class TurmaService {
         this.alunoRepository = alunoRepository;
     }
 
-    public List<TurmaModel> getTurmas() {
-        return turmaRepository.findAll();
+    public List<TurmaDTO> getTurmas() {
+        List<TurmaModel> turmaModels = turmaRepository.findAll();
+        List<TurmaDTO> dtos = turmaModels.stream().map(TurmaDTO::new).toList();
+        return dtos;
     }
 
-    public TurmaModel postTurmas(TurmaModel turma) {
-        return turmaRepository.save(turma);
+    public TurmaModel postTurmas(TurmaRequestDTO dto) {
+        TurmaModel turmaSave = new TurmaModel();
+        turmaSave.setName(dto.getName());
+        return turmaRepository.save(turmaSave);
     }
 
     public TurmaModel updateTurmas(Long id, TurmaModel newData) {

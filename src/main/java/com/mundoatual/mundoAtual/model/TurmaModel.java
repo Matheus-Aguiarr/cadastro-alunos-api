@@ -46,4 +46,8 @@ public class TurmaModel {
     public void setAlunos(List<AlunoModel> alunos) {
         this.alunos = alunos;
     }
+
+    public long getId() {
+        return id;
+    }
 }
