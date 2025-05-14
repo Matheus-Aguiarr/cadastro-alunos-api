@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 public class AlunoController {
 
-//    ToDo: Refactor endpoints to use more DTOs.
+//    ToDo: Refactor the name of the methods to follow just one language
     private final AlunoService alunoService;
 
     public AlunoController(AlunoService alunoService) {

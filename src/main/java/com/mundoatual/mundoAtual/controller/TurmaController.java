@@ -15,8 +15,7 @@ import java.util.List;
 @RestController
 public class TurmaController {
 
-//    ToDo: deleteMapping(deleteTurmas), Refactor endpoints to use more DTOs, create DTOs for the entity Turma.
-
+// ToDo: getTurmaById, RemoveAlunoFromTurma
     private final TurmaService turmaService;
 
     @Autowired
@@ -28,6 +27,12 @@ public class TurmaController {
     public ResponseEntity<List<TurmaDTO>> getTurmas() {
         List<TurmaDTO> allTurmas = turmaService.getTurmas();
         return ResponseEntity.ok(allTurmas);
+    }
+
+    @GetMapping("/turma/{id}")
+    public ResponseEntity<TurmaDTO> getTurmaById(@PathVariable Long id) {
+        TurmaDTO searchedTurma = turmaService.getTurmaById(id);
+        return ResponseEntity.ok(searchedTurma);
     }
 
     @PostMapping("/turma")

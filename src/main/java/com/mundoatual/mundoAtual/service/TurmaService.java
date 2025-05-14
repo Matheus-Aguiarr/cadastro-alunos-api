@@ -1,5 +1,6 @@
 package com.mundoatual.mundoAtual.service;
 
+import com.mundoatual.mundoAtual.dtos.AlunoDTO;
 import com.mundoatual.mundoAtual.dtos.TurmaDTO;
 import com.mundoatual.mundoAtual.dtos.TurmaRequestDTO;
 import com.mundoatual.mundoAtual.model.AlunoModel;
@@ -28,6 +29,12 @@ public class TurmaService {
         List<TurmaModel> turmaModels = turmaRepository.findAll();
         List<TurmaDTO> dtos = turmaModels.stream().map(TurmaDTO::new).toList();
         return dtos;
+    }
+
+    public TurmaDTO getTurmaById(Long id) {
+        TurmaModel turma = turmaRepository.findById(id).orElseThrow(() -> new RuntimeException("Turma nao encontrada"));
+        TurmaDTO dto;
+        return dto = new TurmaDTO(turma);
     }
 
     public TurmaModel postTurmas(TurmaRequestDTO dto) {

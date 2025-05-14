@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 public class AlunoService {
-
+//    ToDo: Refactor if and else of the methods to use orElseThrow efficiently
     private final AlunoRepository repository;
     private final TurmaRepository turmaRepository;
 
