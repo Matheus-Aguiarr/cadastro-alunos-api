@@ -56,6 +56,11 @@ public class TurmaController {
         return ResponseEntity.ok(dto);
     }
 
+    @DeleteMapping("/turma/{turmaId}/aluno/{alunoId}")
+    public ResponseEntity<String> removeAlunoFromTurma(@PathVariable Long turmaId, @PathVariable Long alunoId) {
+        return  ResponseEntity.ok(turmaService.deleteAlunoFromTurma(turmaId, alunoId));
+    }
+
     @DeleteMapping("/turma/{id}")
     public ResponseEntity<String> deleteTurmas(@PathVariable Long id) {
         turmaService.deleteTurmas(id);

@@ -79,4 +79,25 @@ public class TurmaService {
             throw new RuntimeException("Turma ou aluno nao encontrados");
         }
     }
+
+    public String deleteAlunoFromTurma(Long turmaId, Long alunoId) {
+        Optional<TurmaModel> searchTurma = turmaRepository.findById(turmaId);
+        Optional<AlunoModel> searchAluno = alunoRepository.findById(alunoId);
+
+        if (searchTurma.isPresent() && searchAluno.isPresent()) {
+            TurmaModel searchedTurma = searchTurma.get();
+            AlunoModel searchedAluno = searchAluno.get();
+
+            if (searchedTurma.getAlunos().contains(searchedAluno)) {
+                searchedTurma.getAlunos().remove(searchedAluno);
+            }
+            searchedAluno.setTurma(null);
+
+            turmaRepository.save(searchedTurma);
+            alunoRepository.save(searchedAluno);
+            return "Aluno com o id: " + alunoId + " foi removido da turma com o id: " + turmaId;
+        } else {
+            throw new RuntimeException("Turma ou aluno nao encontrados.");
+        }
+    }
 }
